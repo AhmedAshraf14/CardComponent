@@ -37,8 +37,6 @@ class OrderCardBuilder{
     }
     
     func build()->OrderCard{
-        let card = OrderCard()
-        card.configure(orderID: orderID, price: price, itemsCount: itemsCount, status: status, productImage: productImage)
-        return card
+        return OrderCard(orderID: orderID, price: price, itemsCount: itemsCount, status: status, productImage: productImage)
     }
 }

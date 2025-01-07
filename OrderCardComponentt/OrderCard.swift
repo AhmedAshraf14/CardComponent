@@ -14,23 +14,24 @@ class OrderCard: UIView {
     private let itemsLabel = UILabel()
     private let statusLabel = UILabel()
     
-    override init(frame: CGRect) {
+    init(frame: CGRect = .zero, orderID: String?, price: String, itemsCount: Int, status: Status?, productImage: UIImage?) {
         super.init(frame: frame)
         setupViews()
+        configure(orderID: orderID, price: price, itemsCount: itemsCount, status: status, productImage: productImage)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupViews(){
+    private func setupViews(){
         productImageView.layer.cornerRadius = 22
         productImageView.layer.borderColor = UIColor.white.cgColor
         productImageView.layer.borderWidth = 1
         productImageView.contentMode = .scaleAspectFill
         productImageView.layer.masksToBounds = true
         
-        orderIdLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        orderIdLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         orderIdLabel.textColor = .black
         
         priceLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
@@ -55,7 +56,7 @@ class OrderCard: UIView {
         setupConstraints()
         
         self.layer.cornerRadius = 12
-        self.layer.backgroundColor = UIColor.systemGray.cgColor
+        self.layer.backgroundColor = UIColor.white.cgColor
         self.clipsToBounds = true
     }
     
@@ -72,11 +73,11 @@ class OrderCard: UIView {
             productImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8),
             productImageView.widthAnchor.constraint(equalTo: productImageView.heightAnchor),
             
-            orderIdLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            orderIdLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             orderIdLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 8),
             orderIdLabel.trailingAnchor.constraint(lessThanOrEqualTo: statusLabel.leadingAnchor, constant: -8),
             
-            priceLabel.topAnchor.constraint(equalTo: orderIdLabel.bottomAnchor, constant: 4),
+            priceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
             priceLabel.leadingAnchor.constraint(equalTo: orderIdLabel.leadingAnchor),
             priceLabel.trailingAnchor.constraint(lessThanOrEqualTo: itemsLabel.leadingAnchor, constant: -4),
             
@@ -93,7 +94,7 @@ class OrderCard: UIView {
     
     
     
-    func configure(orderID: String?, price: String, itemsCount: Int, status: Status?, productImage: UIImage?) {
+    private func configure(orderID: String?, price: String, itemsCount: Int, status: Status?, productImage: UIImage?) {
         if let orderID = orderID {
             orderIdLabel.text = orderID
             orderIdLabel.isHidden = false
@@ -109,11 +110,11 @@ class OrderCard: UIView {
             statusLabel.isHidden = false
             switch status {
             case .pickup:
-                statusLabel.backgroundColor = .systemPink
+                statusLabel.backgroundColor = UIColor(named: "customPink")
             case .processing:
-                statusLabel.backgroundColor = .systemBlue
+                statusLabel.backgroundColor = UIColor(named: "customDarkBlue")
             case .delivered:
-                statusLabel.backgroundColor = .systemGreen
+                statusLabel.backgroundColor = UIColor(named: "customGreen")
             }
         } else {
             statusLabel.isHidden = true
